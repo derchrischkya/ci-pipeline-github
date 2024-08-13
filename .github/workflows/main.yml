@@ -54,4 +54,4 @@ jobs:
         context: .
         file: ./Dockerfile
         push: true
-        tags: ${{ steps.docker_tags.outputs.tags }}
+        tags: ${{ secrets.DOCKER_USERNAME }}/hello_world_webserver:${{ steps.version.outputs.VERSION }}
