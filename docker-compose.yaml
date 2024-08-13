@@ -1,0 +1,12 @@
+services:
+  pytest:
+    build: .
+    command: pytest
+    working_dir: /code/app
+  web:
+    build: .
+    ports:
+      - "28000:8000"
+    depends_on: 
+      pytest:
+        condition: service_completed_successfully
