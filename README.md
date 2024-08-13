@@ -34,7 +34,7 @@ The pipeline consists of the following steps:
 GET http://localhost:28000/
 ```
 
-````json
+```json
 200 OK
 {
     "message": "Hello World"
