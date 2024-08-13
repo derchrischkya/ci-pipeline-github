@@ -48,10 +48,19 @@ jobs:
       id: version
       run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
 
+    - name: Sanitize Git Branch Name
+      id: sanitize
+      run: |
+        # Sanitize branch name for Docker tag
+        TAG_NAME=$(echo "${GITHUB_REF#refs/heads/}" | tr / - | tr : -)
+        echo "TAG_NAME=$TAG_NAME" >> $GITHUB_ENV
+
     - name: Build and Push Docker Image
       uses: docker/build-push-action@v5
       with:
         context: .
         file: ./Dockerfile
         push: true
-        tags: ${{ secrets.DOCKER_USERNAME }}/hello_world_webserver:latest,${{ secrets.DOCKER_USERNAME }}/hello_world_webserver:${{ env.VERSION }}
+        tags: |
+          ***/hello_world_webserver:latest
+          ***/hello_world_webserver:${{ env.TAG_NAME }}
